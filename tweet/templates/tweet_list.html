@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Blog App
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center mt-4">The Developer's Log </h1>
+<p  class="text-center opacity-50">Built with Django and Python</p>
+
+<a class="btn btn-primary " href="{% url 'tweet_create' %}">Create a tweet</a>
+<div class="container row gap-3">
+{% for tweet in tweets %}
+<div class="card mt-2 " style="width: 22rem;">
+  {% if tweet.photo %}
+  <img src="{{tweet.photo.url}}" class="card-img-top mt-3" alt="...">
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{tweet.user.username}}</h5>
+    <p class="card-text">{{tweet.text}}</p>
+    {% if tweet.user == user %}
+    <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-outline-success">Edit</a>
+    <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-outline-danger">Delete</a>
+    {% endif %}
+  </div>
+</div> 
+{% endfor %}
+</div>
+
+{% endblock %}
